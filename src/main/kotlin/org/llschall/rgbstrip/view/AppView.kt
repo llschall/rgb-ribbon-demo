@@ -24,6 +24,16 @@ class AppView(private val model: AppModel, private val controller: AppController
             frame.add(panel)
             frame.setLocationRelativeTo(null)
             frame.isVisible = true
+            frame.rootPane.registerKeyboardAction(
+                { frame.dispose() },
+                javax.swing.KeyStroke.getKeyStroke("ESCAPE"),
+                javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW
+            )
+            frame.rootPane.registerKeyboardAction(
+                { controller.start() },
+                javax.swing.KeyStroke.getKeyStroke("SPACE"),
+                javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW
+            )
         }
     }
 }
