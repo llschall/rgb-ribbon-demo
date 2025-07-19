@@ -1,6 +1,6 @@
-import org.llschall.rgbstrip.model.AppModel
-import org.llschall.rgbstrip.controller.AppController
-import org.llschall.rgbstrip.view.AppView
+import org.llschall.ledstrip.model.AppModel
+import org.llschall.ledstrip.controller.AppController
+import org.llschall.ledstrip.view.AppView
 
 fun main() {
     val model = AppModel()

@@ -1,1 +1,1 @@
-# rgb-strip
+# led-strip

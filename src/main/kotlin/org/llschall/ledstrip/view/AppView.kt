@@ -1,7 +1,7 @@
-package org.llschall.rgbstrip.view
+package org.llschall.ledstrip.view
 
-import org.llschall.rgbstrip.model.AppModel
-import org.llschall.rgbstrip.controller.AppController
+import org.llschall.ledstrip.model.AppModel
+import org.llschall.ledstrip.controller.AppController
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -28,7 +28,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
 class AppView(private val model: AppModel, private val controller: AppController) {
     fun show() {
         SwingUtilities.invokeLater {
-            val frame = JFrame("RGB Strip App (MVC)")
+            val frame = JFrame("Led Strip App (MVC)")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             frame.setSize(400, 200)
             val panel = MainPanel(model, controller)

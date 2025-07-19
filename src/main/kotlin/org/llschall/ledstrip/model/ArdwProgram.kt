@@ -1,4 +1,4 @@
-package org.llschall.rgbstrip.model
+package org.llschall.ledstrip.model
 
 import org.llschall.ardwloop.IArdwProgram
 import org.llschall.ardwloop.value.SerialData

@@ -1,4 +1,4 @@
-package org.llschall.rgbstrip.model
+package org.llschall.ledstrip.model
 
 class AppModel {
     var version: String = ""
