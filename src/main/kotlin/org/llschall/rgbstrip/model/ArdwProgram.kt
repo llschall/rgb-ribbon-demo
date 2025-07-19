@@ -6,7 +6,7 @@ import org.llschall.ardwloop.value.SerialData
 /**
  * Represents an ardwloop program with a name and code.
  */
-class ArdwloopProgram : IArdwProgram {
+class ArdwProgram : IArdwProgram {
     // You can add additional properties or methods here if needed
     override fun ardwSetup(p0: SerialData?): SerialData? {
         TODO("Not yet implemented")

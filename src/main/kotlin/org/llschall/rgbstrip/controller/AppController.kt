@@ -2,7 +2,7 @@ package org.llschall.rgbstrip.controller
 
 import org.llschall.rgbstrip.model.AppModel
 import org.llschall.ardwloop.ArdwloopStarter
-import org.llschall.rgbstrip.model.ArdwloopProgram
+import org.llschall.rgbstrip.model.ArdwProgram
 
 class AppController(private val model: AppModel) {
     fun loadVersion() {
@@ -10,7 +10,7 @@ class AppController(private val model: AppModel) {
     }
 
     fun start() {
-        ArdwloopStarter.get().start(ArdwloopProgram(), 9600)
+        ArdwloopStarter.get().start(ArdwProgram(), 9600)
     }
 
 }
