@@ -6,6 +6,6 @@ fun main() {
     val model = AppModel()
     val controller = AppController(model)
     controller.loadVersion()
-    val view = AppView(model)
+    val view = AppView(model, controller)
     view.show()
 }
