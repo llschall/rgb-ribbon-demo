@@ -9,10 +9,10 @@ import org.llschall.ardwloop.value.SerialData
 class ArdwProgram : IArdwProgram {
     // You can add additional properties or methods here if needed
     override fun ardwSetup(p0: SerialData?): SerialData? {
-        TODO("Not yet implemented")
+        return SerialData()
     }
 
     override fun ardwLoop(p0: SerialData?): SerialData? {
-        TODO("Not yet implemented")
+        return SerialData()
     }
 }
