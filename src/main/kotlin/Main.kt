@@ -1,27 +1,11 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import org.llschall.ardwloop.ArdwloopStarter
+import org.llschall.rgbstrip.model.AppModel
+import org.llschall.rgbstrip.controller.AppController
+import org.llschall.rgbstrip.view.AppView
 
-fun getTextToDisplay(): String {
-    return "Featuring ardwloop "+
-            ArdwloopStarter.VERSION
-}
-
-@Composable
-@Preview
-fun App() {
-    val text = getTextToDisplay()
-    MaterialTheme {
-        Text(text)
-    }
-}
-
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication, title = "Compose App") {
-        App()
-    }
+fun main() {
+    val model = AppModel()
+    val controller = AppController(model)
+    controller.loadVersion()
+    val view = AppView(model)
+    view.show()
 }
