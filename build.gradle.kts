@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation("io.github.llschall:ardwloop:0.3.3")
+
     testImplementation(kotlin("test"))
 }
 
