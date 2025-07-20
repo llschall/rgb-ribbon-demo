@@ -19,6 +19,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     }
     private val buttonPanel = JPanel()
     private val rgbLabel = JLabel("RGB: ${colorToString(background)}", JLabel.CENTER)
+    private val exitButton = JButton("Exit")
 
     init {
         startButton.addActionListener { controller.start() }
@@ -33,8 +34,10 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
             }
         }
         toggleLedButton.addActionListener { controller.toggleBuiltInLed() }
+        exitButton.addActionListener { System.exit(0) }
         buttonPanel.add(startButton)
         buttonPanel.add(toggleLedButton)
+        buttonPanel.add(exitButton)
         add(colorChooser, BorderLayout.NORTH)
         add(label, BorderLayout.CENTER)
         add(rgbLabel, BorderLayout.EAST)
