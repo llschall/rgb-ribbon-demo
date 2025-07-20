@@ -32,8 +32,15 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         startButton.addActionListener { controller.start() }
         greenButton.addActionListener { background = java.awt.Color(0, 255, 0) }
         colorChooser.selectionModel.addChangeListener {
-            background = colorChooser.color
-            rgbLabel.text = "RGB: ${colorToString(colorChooser.color)}"
+            val c = colorChooser.color
+            background = c
+            rgbLabel.text = "RGB: ${colorToString(c)}"
+            // Update the atomic RGB values in the model's ArdwProgram
+            model.ardwProgram?.let {
+                it.red.set(c.red)
+                it.green.set(c.green)
+                it.blue.set(c.blue)
+            }
         }
         toggleLedButton.addActionListener { controller.toggleBuiltInLed() }
         buttonPanel.add(startButton)
