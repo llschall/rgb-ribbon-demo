@@ -14,6 +14,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     private val label = JLabel("Featuring ardwloop " + model.version, JLabel.CENTER)
     private val startButton = JButton("Start")
     private val greenButton = JButton("Green Background")
+    private val toggleLedButton = JButton("Toggle LED13")
     private val colorChooser = JColorChooser(background).apply {
         // Only show the RGB tab
         val chooserPanels = this.chooserPanels
@@ -34,8 +35,10 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
             background = colorChooser.color
             rgbLabel.text = "RGB: ${colorToString(colorChooser.color)}"
         }
+        toggleLedButton.addActionListener { controller.toggleLed13() }
         buttonPanel.add(startButton)
         buttonPanel.add(greenButton)
+        buttonPanel.add(toggleLedButton)
         add(label, BorderLayout.CENTER)
         add(buttonPanel, BorderLayout.SOUTH)
         add(colorChooser, BorderLayout.NORTH)

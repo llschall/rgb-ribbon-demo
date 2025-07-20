@@ -10,8 +10,15 @@ class AppController(private val model: AppModel) {
     }
 
     fun start() {
-        ArdwloopStarter.get().start(ArdwProgram(), 9600)
+        val program = ArdwProgram()
+        model.ardwProgram = program
+        ArdwloopStarter.get().start(program, 9600)
+    }
+
+    fun toggleLed13() {
+        model.ardwProgram?.let {
+            it.led13.set(!it.led13.get())
+        }
     }
 
 }
-
