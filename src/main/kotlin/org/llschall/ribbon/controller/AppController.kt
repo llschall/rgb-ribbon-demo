@@ -15,9 +15,9 @@ class AppController(private val model: AppModel) {
         ArdwloopStarter.get().start(program, 9600)
     }
 
-    fun toggleLed13() {
+    fun toggleBuiltInLed() {
         model.ardwProgram?.let {
-            it.led13.set(!it.led13.get())
+            it.buildInLed.set(!it.buildInLed.get())
         }
     }
 
