@@ -55,7 +55,12 @@ void loop() {
   int g = ardw_r()->a.y;
   int b = ardw_r()->a.z;
 
-  leds[0] = (r << 16) | (g << 8) | b;
+  int color = (r << 16) | (g << 8) | b;
+
+  // Set the color of all leds
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = color;
+  }
 
   FastLED.show();
 
