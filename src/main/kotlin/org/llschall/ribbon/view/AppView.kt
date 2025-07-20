@@ -13,29 +13,19 @@ import javax.swing.JColorChooser
 class MainPanel(private val model: AppModel, private val controller: AppController) : JPanel(BorderLayout()) {
     private val label = JLabel("Featuring ardwloop " + model.version, JLabel.CENTER)
     private val startButton = JButton("Start")
-    private val greenButton = JButton("Green Background")
-    private val toggleLedButton = JButton("Toggle LED13")
+    private val toggleLedButton = JButton("Toggle build-in LED")
     private val colorChooser = JColorChooser(background).apply {
-        // Only show the RGB tab
-        val chooserPanels = this.chooserPanels
-        for (panel in chooserPanels) {
-            if (panel.displayName != "RGB") {
-                this.removeChooserPanel(panel)
-            }
-        }
-        this.previewPanel = JPanel() // Remove the sample text
+        previewPanel = JPanel() // Remove the color preview
     }
     private val buttonPanel = JPanel()
     private val rgbLabel = JLabel("RGB: ${colorToString(background)}", JLabel.CENTER)
 
     init {
         startButton.addActionListener { controller.start() }
-        greenButton.addActionListener { background = java.awt.Color(0, 255, 0) }
         colorChooser.selectionModel.addChangeListener {
             val c = colorChooser.color
-            background = c
+            background = c // Set the panel background to the chosen color
             rgbLabel.text = "RGB: ${colorToString(c)}"
-            // Update the atomic RGB values in the model's ArdwProgram
             model.ardwProgram?.let {
                 it.red.set(c.red)
                 it.green.set(c.green)
@@ -44,12 +34,11 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         }
         toggleLedButton.addActionListener { controller.toggleBuiltInLed() }
         buttonPanel.add(startButton)
-        buttonPanel.add(greenButton)
         buttonPanel.add(toggleLedButton)
-        add(label, BorderLayout.CENTER)
-        add(buttonPanel, BorderLayout.SOUTH)
         add(colorChooser, BorderLayout.NORTH)
-        add(rgbLabel, BorderLayout.WEST)
+        add(label, BorderLayout.CENTER)
+        add(rgbLabel, BorderLayout.EAST)
+        add(buttonPanel, BorderLayout.SOUTH)
     }
 
     private fun colorToString(color: java.awt.Color): String {
@@ -62,7 +51,7 @@ class AppView(private val model: AppModel, private val controller: AppController
         SwingUtilities.invokeLater {
             val frame = JFrame("RGB Ribbon")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            frame.setSize(400, 200)
+            frame.setSize(400, 500) // Increased height from 200 to 500
             val panel = MainPanel(model, controller)
             frame.add(panel)
             frame.setLocationRelativeTo(null)
