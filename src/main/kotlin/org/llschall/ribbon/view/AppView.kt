@@ -35,7 +35,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
             background = colorChooser.color
             rgbLabel.text = "RGB: ${colorToString(colorChooser.color)}"
         }
-        toggleLedButton.addActionListener { controller.toggleLed13() }
+        toggleLedButton.addActionListener { controller.toggleBuiltInLed() }
         buttonPanel.add(startButton)
         buttonPanel.add(greenButton)
         buttonPanel.add(toggleLedButton)
