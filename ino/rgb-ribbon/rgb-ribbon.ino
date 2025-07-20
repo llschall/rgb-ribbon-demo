@@ -13,7 +13,6 @@
 // Version 3.10.1
 #include <FastLED.h>
 
-
 // How many leds in your strip?
 #define NUM_LEDS 5
 
@@ -48,15 +47,16 @@ void loop() {
 
   if (v == 1) {
     digitalWrite(LED_BUILTIN, HIGH);
-    leds[0] = CRGB::Red;
   } else {
     digitalWrite(LED_BUILTIN, LOW);
-    leds[0] = CRGB::Green;
   }
 
-  for(int i = 0; i < NUM_LEDS; i++) {
+  int r = ardw_r()->a.x;
+  int g = ardw_r()->a.y;
+  int b = ardw_r()->a.z;
 
-  }
+  leds[0] = (r << 16) | (g << 8) | b;
+
   FastLED.show();
 
   delay(99);
