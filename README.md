@@ -1,1 +1,1 @@
-# led-strip
+# rgb-ribbon

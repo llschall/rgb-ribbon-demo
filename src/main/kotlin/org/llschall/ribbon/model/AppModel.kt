@@ -1,4 +1,4 @@
-package org.llschall.ledstrip.model
+package org.llschall.ribbon.model
 
 class AppModel {
     var version: String = ""

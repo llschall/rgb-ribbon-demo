@@ -1,7 +1,7 @@
-package org.llschall.ledstrip.view
+package org.llschall.ribbon.view
 
-import org.llschall.ledstrip.model.AppModel
-import org.llschall.ledstrip.controller.AppController
+import org.llschall.ribbon.model.AppModel
+import org.llschall.ribbon.controller.AppController
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JLabel

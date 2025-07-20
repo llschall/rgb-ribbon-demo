@@ -1,8 +1,8 @@
-package org.llschall.ledstrip.controller
+package org.llschall.ribbon.controller
 
-import org.llschall.ledstrip.model.AppModel
+import org.llschall.ribbon.model.AppModel
 import org.llschall.ardwloop.ArdwloopStarter
-import org.llschall.ledstrip.model.ArdwProgram
+import org.llschall.ribbon.model.ArdwProgram
 
 class AppController(private val model: AppModel) {
     fun loadVersion() {
