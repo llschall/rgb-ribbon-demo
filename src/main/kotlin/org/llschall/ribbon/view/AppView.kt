@@ -9,6 +9,14 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import java.awt.BorderLayout
 import javax.swing.JColorChooser
+import javax.swing.JScrollPane
+import javax.swing.JList
+import javax.swing.ListSelectionModel
+import javax.swing.event.ListSelectionListener
+import javax.swing.JSplitPane
+import org.llschall.ribbon.view.MonitorView
+import java.awt.image.BufferedImage
+import javax.swing.ImageIcon
 
 class MainPanel(private val model: AppModel, private val controller: AppController) : JPanel(BorderLayout()) {
     private val label = JLabel("Featuring ardwloop " + model.version, JLabel.CENTER)
@@ -21,6 +29,12 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     private val rgbLabel = JLabel("RGB: ${colorToString(background)}", JLabel.CENTER)
     private val exitButton = JButton("Exit")
     private val cpuLabel = JLabel("CPU Usage: --%", JLabel.CENTER)
+    private val viewNames = arrayOf("Connect", "Monitor", "About")
+    private val viewList = JList(viewNames).apply {
+        selectionMode = ListSelectionModel.SINGLE_SELECTION
+        selectedIndex = 0
+    }
+    private val mainContentPanel = JPanel(BorderLayout())
 
     init {
         startButton.addActionListener { controller.start() }
@@ -39,11 +53,44 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         buttonPanel.add(startButton)
         buttonPanel.add(toggleLedButton)
         buttonPanel.add(exitButton)
-        add(colorChooser, BorderLayout.NORTH)
-        add(label, BorderLayout.CENTER)
-        add(rgbLabel, BorderLayout.EAST)
-        add(buttonPanel, BorderLayout.SOUTH)
-        add(cpuLabel, BorderLayout.WEST)
+        // Setup mainContentPanel as the switchable view area
+        mainContentPanel.add(label, BorderLayout.CENTER)
+        mainContentPanel.add(rgbLabel, BorderLayout.EAST)
+        mainContentPanel.add(cpuLabel, BorderLayout.WEST)
+        mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
+        // Always add the button panel to the SOUTH of mainContentPanel
+        mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
+        // Listen for view changes
+        viewList.addListSelectionListener(ListSelectionListener { e ->
+            if (!e.valueIsAdjusting) {
+                // Remove all except the button panel
+                mainContentPanel.removeAll()
+                when (viewList.selectedValue) {
+                    "Start" -> {
+                        mainContentPanel.add(label, BorderLayout.CENTER)
+                        mainContentPanel.add(rgbLabel, BorderLayout.EAST)
+                        mainContentPanel.add(cpuLabel, BorderLayout.WEST)
+                        mainContentPanel.add(colorChooser, BorderLayout.NORTH)
+                    }
+                    "Monitor" -> {
+                        val monitorView = MonitorView()
+                        monitorView.setStartAction { controller.start() }
+                        mainContentPanel.add(monitorView, BorderLayout.CENTER)
+                    }
+                    "About" -> {
+                        mainContentPanel.add(JLabel("About: RGB Ribbon App\nhttps://github.com/llschall/ardwloop", JLabel.CENTER), BorderLayout.CENTER)
+                    }
+                }
+                // Always add the button panel after switching views
+                mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
+                mainContentPanel.revalidate()
+                mainContentPanel.repaint()
+            }
+        })
+        // Remove split pane and use only mainContentPanel
+        val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JScrollPane(viewList), mainContentPanel)
+        splitPane.dividerLocation = 150
+        add(splitPane, BorderLayout.CENTER)
         val timer = javax.swing.Timer(1000) {
             val cpuLoad = getCpuLoad()
             cpuLabel.text = "CPU Usage: ${String.format("%.2f", cpuLoad * 100)}%"
