@@ -32,7 +32,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     private val viewNames = arrayOf("Connect", "Monitor", "About")
     private val viewList = JList(viewNames).apply {
         selectionMode = ListSelectionModel.SINGLE_SELECTION
-        selectedIndex = 0
+        selectedIndex = 1 // Show Monitor view by default
     }
     private val mainContentPanel = JPanel(BorderLayout())
 
@@ -66,11 +66,8 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
                 // Remove all except the button panel
                 mainContentPanel.removeAll()
                 when (viewList.selectedValue) {
-                    "Start" -> {
-                        mainContentPanel.add(label, BorderLayout.CENTER)
-                        mainContentPanel.add(rgbLabel, BorderLayout.EAST)
-                        mainContentPanel.add(cpuLabel, BorderLayout.WEST)
-                        mainContentPanel.add(colorChooser, BorderLayout.NORTH)
+                    "Connect" -> {
+                        mainContentPanel.add(ConnectView(label, rgbLabel, cpuLabel, buttonPanel, colorChooser), BorderLayout.CENTER)
                     }
                     "Monitor" -> {
                         val monitorView = MonitorView()
@@ -78,7 +75,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
                         mainContentPanel.add(monitorView, BorderLayout.CENTER)
                     }
                     "About" -> {
-                        mainContentPanel.add(JLabel("About: RGB Ribbon App\nhttps://github.com/llschall/ardwloop", JLabel.CENTER), BorderLayout.CENTER)
+                        mainContentPanel.add(AboutView(), BorderLayout.CENTER)
                     }
                 }
                 // Always add the button panel after switching views

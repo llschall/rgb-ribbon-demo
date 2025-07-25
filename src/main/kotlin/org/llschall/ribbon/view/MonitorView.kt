@@ -14,8 +14,8 @@ class MonitorView : JPanel(BorderLayout()) {
 
     init {
         add(cpuLbl, BorderLayout.CENTER)
-        add(monitorBtn, BorderLayout.SOUTH)
-        add(redLbl, BorderLayout.NORTH)
+        add(monitorBtn, BorderLayout.NORTH)
+        add(redLbl, BorderLayout.SOUTH)
         val timer = Timer(1000) {
             val cpuLoad = getCpuLoad()
             cpuLbl.text = "CPU Usage: $cpuLoad"
