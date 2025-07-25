@@ -20,6 +20,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     private val buttonPanel = JPanel()
     private val rgbLabel = JLabel("RGB: ${colorToString(background)}", JLabel.CENTER)
     private val exitButton = JButton("Exit")
+    private val cpuLabel = JLabel("CPU Usage: --%", JLabel.CENTER)
 
     init {
         startButton.addActionListener { controller.start() }
@@ -42,10 +43,27 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         add(label, BorderLayout.CENTER)
         add(rgbLabel, BorderLayout.EAST)
         add(buttonPanel, BorderLayout.SOUTH)
+        add(cpuLabel, BorderLayout.WEST)
+        val timer = javax.swing.Timer(1000) {
+            val cpuLoad = getCpuLoad()
+            cpuLabel.text = "CPU Usage: ${String.format("%.2f", cpuLoad * 100)}%"
+        }
+        timer.start()
     }
 
     private fun colorToString(color: java.awt.Color): String {
         return "${color.red}, ${color.green}, ${color.blue}"
+    }
+
+    private fun getCpuLoad(): Double {
+        val mbean = java.lang.management.ManagementFactory.getOperatingSystemMXBean()
+        return try {
+            val method = mbean.javaClass.getMethod("getSystemCpuLoad")
+            val value = method.invoke(mbean) as? Double ?: -1.0
+            if (value < 0) 0.0 else value
+        } catch (e: Exception) {
+            0.0
+        }
     }
 }
 
