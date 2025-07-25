@@ -22,10 +22,17 @@ CRGB leds[NUM_LEDS];
 
 void setup() {
 
-  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
+
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  leds[0] = CRGB(0, 0, 20);
+  leds[1] = CRGB(0, 0, 20);
+  leds[2] = CRGB(0, 0, 20);
+  leds[3] = CRGB(0, 0, 20);
+  leds[4] = CRGB(0, 0, 20);
+  FastLED.show();
+
   delay(700);
 
   // Make the led blink on start up
@@ -36,6 +43,10 @@ void setup() {
     delay(300);
   }
 
+  leds[1] = CRGB(0, 20, 0);
+  leds[3] = CRGB(0, 20, 0);
+  FastLED.show();
+  
   // Here the baud value should be set to the same value as on the Java side
   ardw_setup(BAUD_9600);
 }
