@@ -25,6 +25,8 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
 
+  FastLED.setBrightness(40);
+
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   leds[0] = CRGB(0, 0, 20);
   leds[1] = CRGB(0, 0, 20);
@@ -49,6 +51,11 @@ void setup() {
   
   // Here the baud value should be set to the same value as on the Java side
   ardw_setup(BAUD_9600);
+  
+  leds[0] = CRGB(0, 20, 0);
+  leds[2] = CRGB(0, 20, 0);
+  leds[4] = CRGB(0, 20, 0);
+  FastLED.show();
 }
 
 void loop() {
