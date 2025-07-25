@@ -10,7 +10,7 @@ import java.awt.Color
 class MonitorView : JPanel(BorderLayout()) {
     private val cpuLbl = JLabel("CPU Usage: --%", JLabel.CENTER)
     private val monitorBtn = JButton("Monitor")
-    private val redLbl = JLabel("Red Label", JLabel.CENTER).apply { foreground = Color.RED }
+    private val redLbl = JLabel("Ribbon", JLabel.CENTER).apply { foreground = Color.RED }
 
     init {
         redLbl.isOpaque = true
@@ -19,23 +19,23 @@ class MonitorView : JPanel(BorderLayout()) {
         add(monitorBtn, BorderLayout.NORTH)
         add(redLbl, BorderLayout.SOUTH)
         val timer = Timer(1000) {
-            val cpuLoad = getCpuLoad()
-            cpuLbl.text = "CPU Usage: $cpuLoad"
             val cpu = getCpuLoad()
             println(cpu)
             // Scale cpu in the range of 0 to 255
             val scaled = (cpu * 255).toInt()
-            redLbl.background = Color(scaled,scaled,0);
+            cpuLbl.text = "CPU Usage: $cpu $scaled"
+            redLbl.background = Color(scaled,0,0);
         }
         timer.start()
     }
 
     private fun getCpuLoad(): Double {
-        val mbean = java.lang.management.ManagementFactory.getOperatingSystemMXBean()
+        val osBean = java.lang.management.ManagementFactory.getPlatformMXBean(
+            com.sun.management.OperatingSystemMXBean::class.java
+        )
         return try {
-            val method = mbean.javaClass.getMethod("getSystemCpuLoad")
-            val value = method.invoke(mbean) as? Double ?: -1.0
-            if (value < 0) 0.0 else value
+            val cpuLoad = osBean.systemCpuLoad
+            if (cpuLoad.isNaN() || cpuLoad < 0) 0.0 else cpuLoad
         } catch (e: Exception) {
             0.0
         }
