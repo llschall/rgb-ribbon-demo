@@ -13,12 +13,19 @@ class MonitorView : JPanel(BorderLayout()) {
     private val redLbl = JLabel("Red Label", JLabel.CENTER).apply { foreground = Color.RED }
 
     init {
+        redLbl.isOpaque = true
+        redLbl.background = Color.WHITE
         add(cpuLbl, BorderLayout.CENTER)
         add(monitorBtn, BorderLayout.NORTH)
         add(redLbl, BorderLayout.SOUTH)
         val timer = Timer(1000) {
             val cpuLoad = getCpuLoad()
             cpuLbl.text = "CPU Usage: $cpuLoad"
+            val cpu = getCpuLoad()
+            println(cpu)
+            // Scale cpu in the range of 0 to 255
+            val scaled = (cpu * 255).toInt()
+            redLbl.background = Color(scaled,scaled,0);
         }
         timer.start()
     }
