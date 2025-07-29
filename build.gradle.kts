@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("io.github.llschall:ardwloop:0.3.3")
+    implementation("com.github.oshi:oshi-core:6.4.0")
 
     testImplementation(kotlin("test"))
 }

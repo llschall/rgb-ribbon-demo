@@ -67,7 +67,8 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
                 mainContentPanel.removeAll()
                 when (viewList.selectedValue) {
                     "Connect" -> {
-                        mainContentPanel.add(ConnectView(label, rgbLabel, cpuLabel, buttonPanel, colorChooser), BorderLayout.CENTER)
+                        mainContentPanel.add(ConnectView(label, rgbLabel, cpuLabel, buttonPanel, colorChooser),
+                            BorderLayout.CENTER)
                     }
                     "Monitor" -> {
                         val monitorView = MonitorView()
