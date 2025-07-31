@@ -56,7 +56,7 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
     }
 
     fun cpu2Str(cpu: Double) : String {
-        return String.format("%05.2f", cpu)+" %"
+        return String.format("%05.2f", 100*cpu)+" %"
     }
 
     fun setStartAction(action: () -> Unit) {

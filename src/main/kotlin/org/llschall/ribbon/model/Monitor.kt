@@ -28,13 +28,13 @@ class Monitor {
             val value = method.invoke(mbean) as? Double ?: -1.0
             if (value < 0) 0.0 else value
         } catch (_: Exception) {
-            0.0
+            0.77
         }
     }
 
     fun getOshiCpu(): Double {
         val ticks = processor.systemCpuLoadTicks
-        val cpuLoad = processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100.0
+        val cpuLoad = processor.getSystemCpuLoadBetweenTicks(prevTicks)
         prevTicks = ticks
         return cpuLoad
     }
