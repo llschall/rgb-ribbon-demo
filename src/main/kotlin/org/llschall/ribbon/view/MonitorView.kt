@@ -45,9 +45,9 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
             val mem = model.monitor.getOshiMem()
             // Scale cpu in the range of 0 to 255
             val scaled = 100
-            cpu1Lbl.text = "Bean CPU 1: "+cpu2Str(model.monitor.getBeanCpu())
-            cpu2Lbl.text = "Bean CPU 2: "+cpu2Str(model.monitor.getBeanCpu())
-            oshiLbl.text = "OSHI CPU: "+cpu2Str(model.monitor.getOshiCpu())
+            cpu1Lbl.text = "Bean CPU 1:  "+cpu2Str(model.monitor.getBeanCpu())
+            cpu2Lbl.text = "Bean CPU 2:  "+cpu2Str(model.monitor.getMgtCpu())
+            oshiLbl.text = "OSHI CPU:    "+cpu2Str(model.monitor.getOshiCpu())
             memLbl.text = "OSHI Mem: "+String.format("%.2f", mem)+" %"
 
             redLbl.background = Color(scaled,0,0);
@@ -56,7 +56,7 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
     }
 
     fun cpu2Str(cpu: Double) : String {
-        return String.format("%.2f", cpu)+" %"
+        return String.format("%05.2f", cpu)+" %"
     }
 
     fun setStartAction(action: () -> Unit) {
