@@ -33,11 +33,10 @@ class Monitor {
     }
 
     fun getOshiMem(): Double {
-        val totalMem = memory.total
-        val availMem = memory.available
+        val totalMem = memory.total.toDouble()
+        val availMem = memory.available.toDouble()
         val usedMem = totalMem - availMem
-        val usedMemGB = usedMem.toDouble() / (1024 * 1024 * 1024)
-        return 100*usedMemGB/totalMem
+        return usedMem / totalMem
     }
 
 }

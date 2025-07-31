@@ -42,7 +42,7 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
         add(monitorBtn, BorderLayout.NORTH)
         add(redLbl, BorderLayout.SOUTH)
         val timer = Timer(1000) {
-            val mem = model.monitor.getOshiMem()
+            val mem = 100*model.monitor.getOshiMem()
             // Scale cpu in the range of 0 to 255
             val scaled = 100
             cpu1Lbl.text = "Bean CPU 1:  "+cpu2Str(model.monitor.getBeanCpu())
