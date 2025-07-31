@@ -9,7 +9,6 @@ import javax.swing.Timer
 
 class ConnectView(
     label: JLabel,
-    rgbLabel: JLabel,
     colorChooser: JColorChooser,
     private val model: AppModel
 ) : JPanel(BorderLayout()) {
@@ -19,7 +18,6 @@ class ConnectView(
 
     init {
         add(label, BorderLayout.CENTER)
-        add(rgbLabel, BorderLayout.EAST)
         add(cpuLabel, BorderLayout.WEST)
         add(memLabel, BorderLayout.SOUTH)
         add(colorChooser, BorderLayout.NORTH)

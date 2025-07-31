@@ -16,11 +16,13 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
     init {
         redLbl.isOpaque = true
         redLbl.background = Color.WHITE
+        cpuLbl.text = "CPU Usage: --"
+
         add(cpuLbl, BorderLayout.CENTER)
         add(monitorBtn, BorderLayout.NORTH)
         add(redLbl, BorderLayout.SOUTH)
         val timer = Timer(1000) {
-            val cpu = model.monitor.getCpuLoad()
+            val cpu = model.monitor.getOshiCpu()
             // Scale cpu in the range of 0 to 255
             val scaled = (cpu * 255).toInt()
             cpuLbl.text = "CPU Usage: $cpu $scaled"

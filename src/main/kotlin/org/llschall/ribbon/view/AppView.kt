@@ -2,6 +2,7 @@ package org.llschall.ribbon.view
 
 import org.llschall.ribbon.model.AppModel
 import org.llschall.ribbon.controller.AppController
+import org.llschall.ribbon.model.Monitor
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -23,13 +24,11 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         previewPanel = JPanel() // Remove the color preview
     }
     private val buttonPanel = JPanel()
-    private val rgbLabel = JLabel("RGB: ${colorToString(background)}", JLabel.CENTER)
     private val exitButton = JButton("Exit")
-    private val cpuLabel = JLabel("CPU Usage: --%", JLabel.CENTER)
-    private val viewNames = arrayOf("Connect", "Monitor", "About")
+    private val viewNames = arrayOf("Monitor", "Connect", "About")
     private val viewList = JList(viewNames).apply {
         selectionMode = ListSelectionModel.SINGLE_SELECTION
-        selectedIndex = 1 // Show Monitor view by default
+        selectedIndex = 0 // Show Monitor view by default
     }
     private val mainContentPanel = JPanel(BorderLayout())
 
@@ -38,7 +37,6 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         colorChooser.selectionModel.addChangeListener {
             val c = colorChooser.color
             background = c // Set the panel background to the chosen color
-            rgbLabel.text = "RGB: ${colorToString(c)}"
             model.ardwProgram?.let {
                 it.red.set(c.red)
                 it.green.set(c.green)
@@ -52,8 +50,6 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         buttonPanel.add(exitButton)
         // Setup mainContentPanel as the switchable view area
         mainContentPanel.add(label, BorderLayout.CENTER)
-        mainContentPanel.add(rgbLabel, BorderLayout.EAST)
-        mainContentPanel.add(cpuLabel, BorderLayout.WEST)
         mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
         // Always add the button panel to the SOUTH of mainContentPanel
         mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
@@ -64,7 +60,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
                 mainContentPanel.removeAll()
                 when (viewList.selectedValue) {
                     "Connect" -> {
-                        mainContentPanel.add(ConnectView(label, rgbLabel, colorChooser, model),
+                        mainContentPanel.add(ConnectView(label, colorChooser, model),
                             BorderLayout.CENTER)
                     }
                     "Monitor" -> {
@@ -86,31 +82,12 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JScrollPane(viewList), mainContentPanel)
         splitPane.dividerLocation = 150
         add(splitPane, BorderLayout.CENTER)
-        val timer = javax.swing.Timer(1000) {
-            val cpuLoad = getCpuLoad()
-            cpuLabel.text = "CPU Usage: ${String.format("%.2f", cpuLoad * 100)}%"
-        }
-        timer.start()
-    }
-
-    private fun colorToString(color: java.awt.Color): String {
-        return "${color.red}, ${color.green}, ${color.blue}"
-    }
-
-    private fun getCpuLoad(): Double {
-        val mbean = java.lang.management.ManagementFactory.getOperatingSystemMXBean()
-        return try {
-            val method = mbean.javaClass.getMethod("getSystemCpuLoad")
-            val value = method.invoke(mbean) as? Double ?: -1.0
-            if (value < 0) 0.0 else value
-        } catch (e: Exception) {
-            0.0
-        }
     }
 }
 
 class AppView(private val model: AppModel, private val controller: AppController) {
     fun show() {
+
         SwingUtilities.invokeLater {
             val frame = JFrame("RGB Ribbon")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE

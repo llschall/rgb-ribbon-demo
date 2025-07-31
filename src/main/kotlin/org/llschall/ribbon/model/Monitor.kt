@@ -10,7 +10,7 @@ class Monitor {
     private val memory: GlobalMemory = SystemInfo().hardware.memory
     private var prevTicks: LongArray = processor.systemCpuLoadTicks
 
-    fun getCpuLoad(): Double {
+    fun getBeanCpu(): Double {
         val osBean = java.lang.management.ManagementFactory.getPlatformMXBean(
             com.sun.management.OperatingSystemMXBean::class.java
         )
@@ -34,7 +34,18 @@ class Monitor {
         val availMem = memory.available
         val usedMem = totalMem - availMem
         val usedMemGB = usedMem.toDouble() / (1024 * 1024 * 1024)
-        val totalMemGB = totalMem.toDouble() / (1024 * 1024 * 1024)
         return 100*usedMemGB/totalMem;
     }
+
+    private fun getMgtBeanCpu(): Double {
+        val mbean = java.lang.management.ManagementFactory.getOperatingSystemMXBean()
+        return try {
+            val method = mbean.javaClass.getMethod("getSystemCpuLoad")
+            val value = method.invoke(mbean) as? Double ?: -1.0
+            if (value < 0) 0.0 else value
+        } catch (e: Exception) {
+            0.0
+        }
+    }
+
 }
