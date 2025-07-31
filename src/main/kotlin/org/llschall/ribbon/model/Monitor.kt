@@ -13,7 +13,7 @@ class Monitor {
             com.sun.management.OperatingSystemMXBean::class.java
         )
         return try {
-            val cpuLoad = osBean.systemCpuLoad
+            val cpuLoad = osBean.cpuLoad
             if (cpuLoad.isNaN() || cpuLoad < 0) 0.0 else cpuLoad
         } catch (_: Exception) {
             0.0
@@ -22,14 +22,7 @@ class Monitor {
 
 
     fun getMgtCpu(): Double {
-        val mbean = java.lang.management.ManagementFactory.getOperatingSystemMXBean()
-        return try {
-            val method = mbean.javaClass.getMethod("getSystemCpuLoad")
-            val value = method.invoke(mbean) as? Double ?: -1.0
-            if (value < 0) 0.0 else value
-        } catch (_: Exception) {
-            0.77
-        }
+        return 0.1234
     }
 
     fun getOshiCpu(): Double {
