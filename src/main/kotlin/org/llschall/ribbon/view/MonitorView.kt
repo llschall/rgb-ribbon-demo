@@ -29,6 +29,12 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
         gridPanel.add(oshiLbl)
         gridPanel.add(memLbl)
 
+        // Align all labels to the right
+        cpu1Lbl.horizontalAlignment = JLabel.RIGHT
+        cpu2Lbl.horizontalAlignment = JLabel.RIGHT
+        oshiLbl.horizontalAlignment = JLabel.RIGHT
+        memLbl.horizontalAlignment = JLabel.RIGHT
+
         val panel = JPanel(FlowLayout())
         panel.add(gridPanel)
 
@@ -42,7 +48,7 @@ class MonitorView(private val model: AppModel) : JPanel(BorderLayout()) {
             cpu1Lbl.text = "Bean CPU 1: "+cpu2Str(model.monitor.getBeanCpu())
             cpu2Lbl.text = "Bean CPU 2: "+cpu2Str(model.monitor.getBeanCpu())
             oshiLbl.text = "OSHI CPU: "+cpu2Str(model.monitor.getOshiCpu())
-            memLbl.text = "OSHI Mem: "+String.format("%.2f", mem)
+            memLbl.text = "OSHI Mem: "+String.format("%.2f", mem)+" %"
 
             redLbl.background = Color(scaled,0,0);
         }
