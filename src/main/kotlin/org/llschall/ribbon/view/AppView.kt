@@ -2,7 +2,6 @@ package org.llschall.ribbon.view
 
 import org.llschall.ribbon.model.AppModel
 import org.llschall.ribbon.controller.AppController
-import org.llschall.ribbon.model.Monitor
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JLabel
@@ -10,11 +9,7 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 import java.awt.BorderLayout
 import javax.swing.JColorChooser
-import javax.swing.JScrollPane
-import javax.swing.JList
-import javax.swing.ListSelectionModel
-import javax.swing.event.ListSelectionListener
-import javax.swing.JSplitPane
+import javax.swing.JTabbedPane
 
 class MainPanel(private val model: AppModel, private val controller: AppController) : JPanel(BorderLayout()) {
     private val label = JLabel("Featuring ardwloop " + model.version, JLabel.CENTER)
@@ -25,12 +20,7 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
     }
     private val buttonPanel = JPanel()
     private val exitButton = JButton("Exit")
-    private val viewNames = arrayOf("Monitor", "Connect", "About")
-    private val viewList = JList(viewNames).apply {
-        selectionMode = ListSelectionModel.SINGLE_SELECTION
-        selectedIndex = 0 // Show Monitor view by default
-    }
-    private val mainContentPanel = JPanel(BorderLayout())
+    private val tabbedPane = JTabbedPane(JTabbedPane.LEFT)
 
     init {
         startButton.addActionListener { controller.start() }
@@ -48,40 +38,18 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         buttonPanel.add(startButton)
         buttonPanel.add(toggleLedButton)
         buttonPanel.add(exitButton)
-        // Setup mainContentPanel as the switchable view area
-        mainContentPanel.add(label, BorderLayout.CENTER)
-        mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
-        // Always add the button panel to the SOUTH of mainContentPanel
-        mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
-        // Listen for view changes
-        viewList.addListSelectionListener(ListSelectionListener { e ->
-            if (!e.valueIsAdjusting) {
-                // Remove all except the button panel
-                mainContentPanel.removeAll()
-                when (viewList.selectedValue) {
-                    "Connect" -> {
-                        mainContentPanel.add(ConnectView(label, colorChooser, model),
-                            BorderLayout.CENTER)
-                    }
-                    "Monitor" -> {
-                        val monitorView = MonitorView(model)
-                        monitorView.setStartAction { controller.start() }
-                        mainContentPanel.add(monitorView, BorderLayout.CENTER)
-                    }
-                    "About" -> {
-                        mainContentPanel.add(AboutView(), BorderLayout.CENTER)
-                    }
-                }
-                // Always add the button panel after switching views
-                mainContentPanel.add(buttonPanel, BorderLayout.SOUTH)
-                mainContentPanel.revalidate()
-                mainContentPanel.repaint()
-            }
-        })
-        // Remove split pane and use only mainContentPanel
-        val splitPane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JScrollPane(viewList), mainContentPanel)
-        splitPane.dividerLocation = 150
-        add(splitPane, BorderLayout.CENTER)
+        // Setup Monitor tab
+        val monitorView = MonitorView(model)
+        monitorView.setStartAction { controller.start() }
+        tabbedPane.addTab("Monitor", monitorView)
+        // Setup Connect tab
+        tabbedPane.addTab("Connect", ConnectView(label, colorChooser, model))
+        // Setup About tab
+        tabbedPane.addTab("About", AboutView())
+        // Add the tabbedPane to the center
+        add(tabbedPane, BorderLayout.CENTER)
+        // Always add the button panel to the SOUTH
+        add(buttonPanel, BorderLayout.SOUTH)
     }
 }
 
