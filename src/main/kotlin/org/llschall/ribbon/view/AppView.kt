@@ -14,9 +14,6 @@ import javax.swing.JList
 import javax.swing.ListSelectionModel
 import javax.swing.event.ListSelectionListener
 import javax.swing.JSplitPane
-import org.llschall.ribbon.view.MonitorView
-import java.awt.image.BufferedImage
-import javax.swing.ImageIcon
 
 class MainPanel(private val model: AppModel, private val controller: AppController) : JPanel(BorderLayout()) {
     private val label = JLabel("Featuring ardwloop " + model.version, JLabel.CENTER)
@@ -67,11 +64,11 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
                 mainContentPanel.removeAll()
                 when (viewList.selectedValue) {
                     "Connect" -> {
-                        mainContentPanel.add(ConnectView(label, rgbLabel, colorChooser),
+                        mainContentPanel.add(ConnectView(label, rgbLabel, colorChooser, model),
                             BorderLayout.CENTER)
                     }
                     "Monitor" -> {
-                        val monitorView = MonitorView()
+                        val monitorView = MonitorView(model)
                         monitorView.setStartAction { controller.start() }
                         mainContentPanel.add(monitorView, BorderLayout.CENTER)
                     }
