@@ -38,10 +38,6 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         buttonPanel.add(startButton)
         buttonPanel.add(toggleLedButton)
         buttonPanel.add(exitButton)
-        // Setup Monitor tab
-        val monitorView = MonitorView(model)
-        monitorView.setStartAction { controller.start() }
-        tabbedPane.addTab("Monitor", monitorView)
         // Setup Connect tab
         tabbedPane.addTab("Connect", ConnectView(label, colorChooser, model))
         // Setup About tab
