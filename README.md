@@ -1,4 +1,4 @@
-# rgb-ribbon
+# rgb-ribbon-demo
 
 ***Work in progress...***
 
@@ -13,6 +13,6 @@ Features the [ardwloop](https://github.com/llschall/ardwloop) library.
 Run the following from any folder.
 
 ```
-git clone https://github.com/llschall/rgb-ribbon;
-./rgb-ribbon/gradlew -p rgb-ribbon run;
+git clone https://github.com/llschall/rgb-ribbon-demo;
+./rgb-ribbon/gradlew -p rgb-ribbon-demo run;
 ```

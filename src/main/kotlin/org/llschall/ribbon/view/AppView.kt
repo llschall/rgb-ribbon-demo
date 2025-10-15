@@ -57,7 +57,7 @@ class AppView(private val model: AppModel, private val controller: AppController
     fun show() {
 
         SwingUtilities.invokeLater {
-            val frame = JFrame("RGB Ribbon")
+            val frame = JFrame("rgb-ribbon demo ")
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
             frame.setSize(600, 500) // Changed width to 600, height remains 500
             val panel = MainPanel(model, controller)
