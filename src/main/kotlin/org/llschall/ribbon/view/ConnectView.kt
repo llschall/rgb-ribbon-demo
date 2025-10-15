@@ -13,14 +13,15 @@ class ConnectView(
     private val model: AppModel
 ) : JPanel(BorderLayout()) {
 
-    val cpuLabel: JLabel = JLabel()
-    val memLabel: JLabel = JLabel()
+    private val slider = javax.swing.JSlider(0, 255, 55)
 
     init {
         add(label, BorderLayout.CENTER)
-        add(cpuLabel, BorderLayout.WEST)
-        add(memLabel, BorderLayout.SOUTH)
         add(colorChooser, BorderLayout.NORTH)
-        // The buttonPanel is always added in AppView, not here
+        add(slider, BorderLayout.SOUTH)
+
+        slider.addChangeListener {
+            model.ardwProgram?.brightness?.set(slider.value)
+        }
     }
 }

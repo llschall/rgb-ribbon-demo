@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 class ArdwProgram : IArdwProgram {
 
+    var brightness = AtomicInteger()
     var buildInLed = AtomicBoolean(false)
 
     var red = AtomicInteger()
@@ -32,6 +33,8 @@ class ArdwProgram : IArdwProgram {
         data.a.x = red.get()
         data.a.y = green.get()
         data.a.z = blue.get()
+
+        data.b.x = brightness.get()
 
         return data
     }

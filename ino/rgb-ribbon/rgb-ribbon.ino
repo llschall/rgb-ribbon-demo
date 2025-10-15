@@ -10,7 +10,7 @@
 #include <Ardwloop.h>
 
 // Use FastLED by Daniel Garcia
-// Version 3.10.1
+// Version 3.10.3
 #include <FastLED.h>
 
 // How many leds in your strip?
@@ -68,6 +68,9 @@ void loop() {
   } else {
     digitalWrite(LED_BUILTIN, LOW);
   }
+
+  int brightness = ardw_r()->b.x;
+  FastLED.setBrightness(brightness);
 
   int r = ardw_r()->a.x;
   int g = ardw_r()->a.y;
