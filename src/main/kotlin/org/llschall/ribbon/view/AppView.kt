@@ -27,10 +27,10 @@ class MainPanel(private val model: AppModel, private val controller: AppControll
         colorChooser.selectionModel.addChangeListener {
             val c = colorChooser.color
             background = c // Set the panel background to the chosen color
-            model.ardwProgram?.let {
-                it.red.set(c.red)
-                it.green.set(c.green)
-                it.blue.set(c.blue)
+            model.ribbon.getLed(0).let {
+                it.setRed(c.red)
+                it.setGreen(c.green)
+                it.setBlue(c.blue)
             }
         }
         toggleLedButton.addActionListener { controller.toggleBuiltInLed() }

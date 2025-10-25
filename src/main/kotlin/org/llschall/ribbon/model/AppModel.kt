@@ -1,6 +1,8 @@
 package org.llschall.ribbon.model
 
+import org.llschall.rgbribbon.RgbRibbon
+
 class AppModel {
     var version: String = ""
-    var ardwProgram: ArdwProgram? = null
+    var ribbon: RgbRibbon = RgbRibbon(55)
 }

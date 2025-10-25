@@ -7,12 +7,13 @@ group = "org.example"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     google()
     mavenCentral()
 }
 
 dependencies {
-    implementation("io.github.llschall:ardwloop:0.3.3")
+    implementation("io.github.llschall:rgb-ribbon:0.0.3-SNAPSHOT")
 
     testImplementation(kotlin("test"))
 }

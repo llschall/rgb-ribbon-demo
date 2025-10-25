@@ -16,12 +16,14 @@ class ConnectView(
     private val slider = javax.swing.JSlider(0, 255, 55)
 
     init {
+
         add(label, BorderLayout.CENTER)
         add(colorChooser, BorderLayout.NORTH)
         add(slider, BorderLayout.SOUTH)
+        model.ribbon.setBrightness(slider.value)
 
         slider.addChangeListener {
-            model.ardwProgram?.brightness?.set(slider.value)
+            model.ribbon.setBrightness(slider.value)
         }
     }
 }
