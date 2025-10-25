@@ -1,0 +1,30 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.1.21'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.llschall:rgb-ribbon:0.0.3'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(21)
+}
+
+application {
+    mainClass = 'MainKt'
+}
+
